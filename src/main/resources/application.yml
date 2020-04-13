@@ -1,0 +1,21 @@
+server:
+  port: 8081
+auth-server-base-url: http://localhost:8080/auth/realms/mycompany/protocol/openid-connect
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          mykeycloak:
+            client-id: myapp
+            authorization-grant-type: authorization_code
+            scope: User.Read
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+        provider:
+          mykeycloak:
+            authorization-uri: ${auth-server-base-url}/auth
+            token-uri: ${auth-server-base-url}/token
+            user-info-uri: ${auth-server-base-url}/userinfo
+            jwk-set-uri: ${auth-server-base-url}/certs
+            user-name-attribute: preferred_username
+
